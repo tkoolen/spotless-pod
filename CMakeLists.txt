@@ -9,22 +9,31 @@ include(cmake/pods.cmake)
 include(cmake/matlab_pods.cmake)
 pods_configure_matlab_paths()
 
+find_program(matlab matlab)
+if (NOT matlab )
+  message(FATAL_ERROR "Could not find matlab executable")
+endif()
+
+add_custom_target(run ALL 
+			  DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/spot_install_manifest.txt)
+
+add_custom_command(OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/spot_install_manifest.txt 
+			  COMMAND ${matlab} -nojvm -nosplash -r \"spot_install_manifest\; exit\"
+			  DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/spotless/spot_install.m
+			  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+                          )
+
 message(STATUS "Writing addpath_spotless.m and rmpath_spotless.m to ${CMAKE_INSTALL_PREFIX}/matlab") 
 file(WRITE ${CMAKE_INSTALL_PREFIX}/matlab/addpath_spotless.m
 	   "function addpath_spotless()\n"
-	   "  wd = cd(fullfile('${CMAKE_CURRENT_SOURCE_DIR}','spotless'));\n"
-	   "  spot_install();\n"
-	   "  cd(wd);\n"
+	   "  p = importdata(fullfile('${CMAKE_CURRENT_SOURCE_DIR}','spot_install_manifest.txt'));\n"
+	   "  addpath(p{:});\n"
     )
 
 file(WRITE ${CMAKE_INSTALL_PREFIX}/matlab/rmpath_spotless.m
 	   "function rmpath_spotless()\n"
-	   "  spotdir=fullfile('${CMAKE_CURRENT_SOURCE_DIR}','spotless');\n"
-	   "  rmpath(spotdir);\n"
-	   "  rmpath(fullfile(spotdir,'bin'));\n"
-	   "  rmpath(fullfile(spotdir,'util'));\n"
-	   "  rmpath(fullfile(spotdir,'mint'));\n"
-	   "  rmpath(fullfile(spotdir,'mss'));\n"
+	   "  p = importdata(fullfile('${CMAKE_CURRENT_SOURCE_DIR}','spot_install_manifest.txt'));\n"
+	   "  rmpath(p{:});\n"
     )
 
 
