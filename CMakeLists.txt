@@ -18,7 +18,7 @@ add_custom_target(run ALL
 			  DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/spot_install_manifest.txt)
 
 add_custom_command(OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/spot_install_manifest.txt 
-			  COMMAND ${matlab} -nojvm -nosplash -r \"spot_install_manifest\; exit\"
+			  COMMAND ${matlab} -nojvm -nosplash -r \"setenv('PODS_MATLAB_SKIP_SETUP','true')\; addpath_drake\; spot_install_manifest\; exit\"
 			  DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/spotless/spot_install.m
 			  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
                           )
