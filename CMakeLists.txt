@@ -18,7 +18,7 @@ add_custom_target(run ALL
 			  DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/spot_install_manifest.txt)
 
 add_custom_command(OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/spot_install_manifest.txt 
-			  COMMAND ${matlab} -nojvm -nosplash -r \"setenv('PODS_MATLAB_SKIP_SETUP','true')\; addpath_drake\; spot_install_manifest\; exit\"
+			  COMMAND ${matlab} -nojvm -nosplash -r \"setenv('PODS_MATLAB_SKIP_SETUP','true')\; spot_install_manifest\; exit\"
 			  DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/spotless/spot_install.m
 			  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
                           )
@@ -26,6 +26,10 @@ add_custom_command(OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/spot_install_manifest.txt
 message(STATUS "Writing addpath_spotless.m and rmpath_spotless.m to ${CMAKE_INSTALL_PREFIX}/matlab") 
 file(WRITE ${CMAKE_INSTALL_PREFIX}/matlab/addpath_spotless.m
 	   "function addpath_spotless()\n"
+	   "  if ~isempty(getenv('PODS_MATLAB_SKIP_SETUP'))\n"
+	   "    disp('Found PODS_MATLAB_SKIP_SETUP. Skipping addpath_spotless');\n"
+	   "    return;\n"
+	   "  end\n"
 	   "  p = importdata(fullfile('${CMAKE_CURRENT_SOURCE_DIR}','spot_install_manifest.txt'));\n"
 	   "  addpath(p{:});\n"
     )
