@@ -1,0 +1,3 @@
+[submodule "spotless"]
+	path = spotless
+	url = git://github.com/mmt/spotless.git
