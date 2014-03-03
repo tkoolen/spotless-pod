@@ -5,6 +5,8 @@ cmake_minimum_required(VERSION 2.6.0)
 set(POD_NAME spotless)
 include(cmake/pods.cmake)
 
+get_relative_path("${CMAKE_INSTALL_PREFIX}/matlab" "${CMAKE_CURRENT_SOURCE_DIR}" relpath)
+
 # setup matlab pods-compliance
 include(cmake/matlab_pods.cmake)
 pods_configure_matlab_paths()
@@ -26,13 +28,13 @@ add_custom_command(OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/spot_install_manifest.txt
 message(STATUS "Writing addpath_spotless.m and rmpath_spotless.m to ${CMAKE_INSTALL_PREFIX}/matlab") 
 file(WRITE ${CMAKE_INSTALL_PREFIX}/matlab/addpath_spotless.m
 	   "function addpath_spotless()\n"
-	   "  p = importdata(fullfile('${CMAKE_CURRENT_SOURCE_DIR}','spot_install_manifest.txt'));\n"
+	   "  p = importdata(fullfile('${relpath}','spot_install_manifest.txt'));\n"
 	   "  addpath(p{:});\n"
     )
 
 file(WRITE ${CMAKE_INSTALL_PREFIX}/matlab/rmpath_spotless.m
 	   "function rmpath_spotless()\n"
-	   "  p = importdata(fullfile('${CMAKE_CURRENT_SOURCE_DIR}','spot_install_manifest.txt'));\n"
+	   "  p = importdata(fullfile('${relpath}','spot_install_manifest.txt'));\n"
 	   "  rmpath(p{:});\n"
     )
 
