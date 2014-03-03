@@ -28,13 +28,15 @@ add_custom_command(OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/spot_install_manifest.txt
 message(STATUS "Writing addpath_spotless.m and rmpath_spotless.m to ${CMAKE_INSTALL_PREFIX}/matlab") 
 file(WRITE ${CMAKE_INSTALL_PREFIX}/matlab/addpath_spotless.m
 	   "function addpath_spotless()\n"
-	   "  p = importdata(fullfile('${relpath}','spot_install_manifest.txt'));\n"
+	   "  mfiledir = fileparts(which(mfilename));\n"	
+	   "  p = importdata(fullfile(mfiledir,'${relpath}','spot_install_manifest.txt'));\n"
 	   "  addpath(p{:});\n"
     )
 
 file(WRITE ${CMAKE_INSTALL_PREFIX}/matlab/rmpath_spotless.m
 	   "function rmpath_spotless()\n"
-	   "  p = importdata(fullfile('${relpath}','spot_install_manifest.txt'));\n"
+	   "  mfiledir = fileparts(which(mfilename));\n"
+	   "  p = importdata(fullfile(mfiledir,'${relpath}','spot_install_manifest.txt'));\n"
 	   "  rmpath(p{:});\n"
     )
 
