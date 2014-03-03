@@ -6,7 +6,7 @@ spot_install;
 newpath = path;
 cd ..;
 
-pathdiff = setdiff(regexp(newpath,':','split'),regexp(oldpath,':','split'));
+pathdiff = setdiff(regexp(newpath,pathsep,'split'),regexp(oldpath,pathsep,'split'));
 
 fptr = fopen('spot_install_manifest.txt','w');
 fprintf(fptr,'%s\n',pathdiff{:});
