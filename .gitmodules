@@ -1,3 +1,6 @@
 [submodule "spotless"]
 	path = spotless
 	url = git://github.com/mmt/spotless.git
+[submodule "cmake"]
+	path = cmake
+	url = https://github.com/RobotLocomotion/cmake.git
