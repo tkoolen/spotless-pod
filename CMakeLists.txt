@@ -17,27 +17,15 @@ if (NOT matlab )
 endif()
 
 add_custom_target(run ALL 
-			  DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/spot_install_manifest.txt)
+			  DEPENDS
+			  "${CMAKE_INSTALL_PREFIX}/addpath_spotless.m"
+			  "${CMAKE_INSTALL_PREFIX}/rmpath_spotless.m")
 
-add_custom_command(OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/spot_install_manifest.txt 
-			  COMMAND ${matlab} -nojvm -nosplash -r \"spot_install_manifest\; exit\"
-			  DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/spotless/spot_install.m
+add_custom_command(OUTPUT "${CMAKE_INSTALL_PREFIX}/addpath_spotless.m" "${CMAKE_INSTALL_PREFIX}/rmpath_spotless.m" 
+			  COMMAND ${matlab} -nojvm -nosplash -r \"spot_pods_install('${CMAKE_INSTALL_PREFIX}/matlab','${relpath}')\; exit\"
+			  DEPENDS
+			    "${CMAKE_CURRENT_SOURCE_DIR}/spotless/spot_install.m"
+			    "${CMAKE_CURRENT_SOURCE_DIR}/spot_pods_install.m" 
 			  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
                           )
-
-message(STATUS "Writing addpath_spotless.m and rmpath_spotless.m to ${CMAKE_INSTALL_PREFIX}/matlab") 
-file(WRITE ${CMAKE_INSTALL_PREFIX}/matlab/addpath_spotless.m
-	   "function addpath_spotless()\n"
-	   "  mfiledir = fileparts(which(mfilename));\n"	
-	   "  p = importdata(fullfile(mfiledir,'${relpath}','spot_install_manifest.txt'));\n"
-	   "  addpath(p{:});\n"
-    )
-
-file(WRITE ${CMAKE_INSTALL_PREFIX}/matlab/rmpath_spotless.m
-	   "function rmpath_spotless()\n"
-	   "  mfiledir = fileparts(which(mfilename));\n"
-	   "  p = importdata(fullfile(mfiledir,'${relpath}','spot_install_manifest.txt'));\n"
-	   "  rmpath(p{:});\n"
-    )
-
 
