@@ -17,8 +17,11 @@ ifeq "$(BUILD_TYPE)" ""
 BUILD_TYPE="Release"
 endif
 
+# note: this is evaluated at run time, so must be in the pod-build directory
+CMAKE_MAKE_PROGRAM="`cmake -LA -N | grep CMAKE_MAKE_PROGRAM | cut -d "=" -f2`"
+
 all: pod-build/Makefile
-	$(MAKE) -C pod-build all install
+	cd pod-build && $(CMAKE_MAKE_PROGRAM) all install 
 
 pod-build/Makefile:
 	$(MAKE) configure
@@ -42,7 +45,7 @@ clean:
 
 # other (custom) targets are passed through to the cmake-generated Makefile 
 %::
-	$(MAKE) -C pod-build $@
+	cd pod-build && $(CMAKE_MAKE_PROGRAM) $@
 
 # Default to a less-verbose build.  If you want all the gory compiler output,
 # run "make VERBOSE=1"

@@ -22,7 +22,7 @@ add_custom_target(run ALL
 			  "${CMAKE_INSTALL_PREFIX}/rmpath_spotless.m")
 
 add_custom_command(OUTPUT "${CMAKE_INSTALL_PREFIX}/addpath_spotless.m" "${CMAKE_INSTALL_PREFIX}/rmpath_spotless.m" 
-			  COMMAND ${matlab} -nojvm -nosplash -r \"spot_pods_install('${CMAKE_INSTALL_PREFIX}/matlab','${relpath}')\; exit\"
+			  COMMAND ${matlab} -nojvm -nosplash -r "\"spot_pods_install('${CMAKE_INSTALL_PREFIX}/matlab','${relpath}'); exit\""
 			  DEPENDS
 			    "${CMAKE_CURRENT_SOURCE_DIR}/spotless/spot_install.m"
 			    "${CMAKE_CURRENT_SOURCE_DIR}/spot_pods_install.m" 
