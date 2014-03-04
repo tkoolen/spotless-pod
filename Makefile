@@ -38,7 +38,7 @@ configure:
 		   -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) ..
 
 release_filelist:
-	find * -type f | grep -v "pod-build" | grep -v ".git" 
+	find * -type f | grep -v "pod-build" | grep -v "\.git" 
 
 clean:
 	-if [ -d pod-build ]; then $(MAKE) -C pod-build clean; rm -rf pod-build; fi
