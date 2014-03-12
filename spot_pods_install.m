@@ -11,6 +11,10 @@ pathdiff = strrep(pathdiff,pwd,relpath);
 
 fprintf('Writing addpath_spotless.m and rmpath_spotless.m to %s\n',destdir);
 
+if ~exist(destdir,'dir')
+  mkdir(destdir);
+end
+
 fptr = fopen(fullfile(destdir,'addpath_spotless.m'),'w');
 fprintf(fptr,'function addpath_spotless()\n');
 fprintf(fptr,'  mfiledir = fileparts(which(mfilename));\n');
