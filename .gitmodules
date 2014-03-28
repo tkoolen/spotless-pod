@@ -1,6 +1,6 @@
 [submodule "spotless"]
 	path = spotless
-	url = git://github.com/mmt/spotless.git
+	url = https://github.com/mmt/spotless.git
 	branch = master
 [submodule "cmake"]
 	path = cmake
