@@ -6,3 +6,4 @@
 	path = cmake
 	url = https://github.com/RobotLocomotion/cmake.git
 	branch = master
+	ignore = dirty
