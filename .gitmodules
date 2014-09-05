@@ -1,6 +1,6 @@
 [submodule "spotless"]
 	path = spotless
-	url = https://github.com/spot-toolbox/spot
+	url = https://github.com/spot-toolbox/spotless
 	branch = master
 [submodule "cmake"]
 	path = cmake
