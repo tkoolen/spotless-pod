@@ -31,7 +31,7 @@ configure:
 	@mkdir -p pod-build
 
 	# run CMake to generate and configure the build scripts
-	@cd pod-build && cmake -DCMAKE_INSTALL_PREFIX="$(BUILD_PREFIX)" \
+	@cd pod-build && cmake ${CMAKE_FLAGS} -DCMAKE_INSTALL_PREFIX="$(BUILD_PREFIX)" \
 		   -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) ..
 
 release_filelist:
