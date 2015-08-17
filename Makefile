@@ -51,7 +51,7 @@ configure:
 
 # create the temporary build directory if needed
 ifeq ($(BUILD_SYSTEM), Windows_NT)
-	@if not exist $(BUILD_PREFIX) ( mkdir $(BUILD_PREFIX) )
+	@if not exist $(BUILD_PREFIX) ( mkdir "$(BUILD_PREFIX)" )
 	@if not exist pod-build ( mkdir pod-build )
 else
 	@mkdir -p pod-build
