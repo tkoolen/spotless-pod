@@ -57,7 +57,7 @@ else
 	@mkdir -p pod-build
 endif
 
-	# run CMake to generate and configure the build scripts
+# run CMake to generate and configure the build scripts
 	@cd pod-build && cmake ${CMAKE_FLAGS} -DCMAKE_INSTALL_PREFIX="$(BUILD_PREFIX)" \
 		   -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) ..
 
