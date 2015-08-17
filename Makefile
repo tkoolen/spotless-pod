@@ -47,7 +47,7 @@ pod-build/Makefile:
 
 .PHONY: configure
 configure:
-	@echo "\nBUILD_PREFIX: $(BUILD_PREFIX)\n\n"
+	@echo "BUILD_PREFIX: $(BUILD_PREFIX)"
 
 # create the temporary build directory if needed
 ifeq ($(BUILD_SYSTEM), Windows_NT)
