@@ -27,3 +27,5 @@ add_custom_command(OUTPUT "${CMAKE_INSTALL_PREFIX}/matlab/addpath_spotless.m" "$
 			    "${CMAKE_CURRENT_SOURCE_DIR}/spotless/spot_install.m"
 			    "${CMAKE_CURRENT_SOURCE_DIR}/spot_pods_install.m"
         )
+
+add_custom_target(install DEPENDS all) 
