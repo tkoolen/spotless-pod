@@ -16,6 +16,11 @@ if (NOT matlab )
   message(FATAL_ERROR "Could not find matlab executable")
 endif()
 
+add_custom_target(run ALL
+			  DEPENDS
+			  "${CMAKE_INSTALL_PREFIX}/matlab/addpath_spotless.m"
+			  "${CMAKE_INSTALL_PREFIX}/matlab/rmpath_spotless.m")
+
 add_custom_command(OUTPUT "${CMAKE_INSTALL_PREFIX}/matlab/addpath_spotless.m" "${CMAKE_INSTALL_PREFIX}/matlab/rmpath_spotless.m"
 			  COMMAND ${matlab} -wait -nosplash -nodesktop -nodisplay -r "\"cd('${CMAKE_CURRENT_SOURCE_DIR}');spot_pods_install('${CMAKE_INSTALL_PREFIX}/matlab','${relpath}');exit\""
 			  DEPENDS
@@ -23,6 +28,4 @@ add_custom_command(OUTPUT "${CMAKE_INSTALL_PREFIX}/matlab/addpath_spotless.m" "$
 			    "${CMAKE_CURRENT_SOURCE_DIR}/spot_pods_install.m"
         )
 
-add_custom_target(install_spotless DEPENDS 
-			    "${CMAKE_INSTALL_PREFIX}/matlab/addpath_spotless.m"
-			    "${CMAKE_INSTALL_PREFIX}/matlab/rmpath_spotless.m") 
+add_custom_target(install DEPENDS run) 

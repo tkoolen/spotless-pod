@@ -13,7 +13,7 @@ CMAKE_CONFIG=--config $(BUILD_TYPE)
 
 .PHONY: all
 all: configure
-	cmake --build pod-build $(CMAKE_CONFIG) --target install_spotless
+	cmake --build pod-build $(CMAKE_CONFIG) --target install
 
 pod-build:
 	cmake -E make_directory pod-build
